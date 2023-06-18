@@ -4,23 +4,13 @@ class AuthParams {
 
   AuthParams({required this.email, required this.password});
 
-  String? emailValidate() {
-    if (email.isEmpty) {
-      return "Email is required";
-    }
-    if (!email.contains("@")) {
-      return "Email is invalid";
-    }
-    return null;
-  }
-
-  String? passwordValidate() {
-    if (password.isEmpty) {
-      return "Password is required";
-    }
-    if (password.length < 6) {
-      return "Password must be at least 6 characters";
-    }
-    return null;
+  AuthParams copyWith({
+    String? email,
+    String? password,
+  }) {
+    return AuthParams(
+      email: email ?? this.email,
+      password: password ?? this.password,
+    );
   }
 }

@@ -55,7 +55,7 @@ class UserAppDataSourceFirebase implements UserAppDataSource {
         token: userCredential.user!.refreshToken!,
       );
 
-      await _getCollectionReference().doc(user.id.toString()).set(user.toJson());
+      await _getCollectionReference().doc(user.id.toString()).set(user.toMap());
     }
     return user;
   }
@@ -74,13 +74,13 @@ class UserAppDataSourceFirebase implements UserAppDataSource {
       email: user.email,
       token: user.token,
     );
-    await _getCollectionReference().doc(userDto.id.toString()).set(userDto.toJson());
+    await _getCollectionReference().doc(userDto.id.toString()).set(userDto.toMap());
     return userDto;
   }
 
   @override
   Future<void> updateUser(UserAppDto user) async {
-    await _getCollectionReference().doc(user.id.toString()).update(user.toJson());
+    await _getCollectionReference().doc(user.id.toString()).update(user.toMap());
   }
 
   CollectionReference _getCollectionReference() {

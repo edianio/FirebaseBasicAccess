@@ -1,47 +1,47 @@
+import 'package:firebase_basic_access/src/data/user/data_source/user_app_data_source.dart';
+import 'package:firebase_basic_access/src/data/user/model/user_app_dto.dart';
 import 'package:firebase_basic_access/src/domain/user/entities/auth_params.dart';
 import 'package:firebase_basic_access/src/domain/user/entities/user_app.dart';
 import 'package:firebase_basic_access/src/domain/user/repository/user_app_repository.dart';
 
 class UserAppRepositoryImpl implements UserAppRepository {
+  final UserAppDataSource dataSource;
+
+  const UserAppRepositoryImpl(this.dataSource);
+
   @override
-  Future<void> forgotPassword(String email) {
-    // TODO: implement forgotPassword
-    throw UnimplementedError();
+  Future<void> forgotPassword(String email) async {
+    await dataSource.forgotPassword(email);
   }
 
   @override
-  Stream<UserApp?> getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
+  Stream<UserApp?> getCurrentUser() => dataSource.getCurrentUser().map((dto) => dto?.toEntity());
+
+  @override
+  Future<UserApp> login(AuthParams params) async {
+    final dto = await dataSource.login(params);
+    return dto.toEntity();
   }
 
   @override
-  Future<UserApp> login(AuthParams params) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<UserApp> loginWithGoogle() async {
+    final user = await dataSource.loginWithGoogle();
+    return user.toEntity();
   }
 
   @override
-  Future<UserApp> loginWithGoogle() {
-    // TODO: implement loginWithGoogle
-    throw UnimplementedError();
+  Future<void> logout() async {
+    await dataSource.logout();
   }
 
   @override
-  Future<void> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<UserApp> signUp(UserApp user, AuthParams authParams) async {
+    final dto = await dataSource.signUp(UserAppDto.fromEntity(user), authParams);
+    return dto.toEntity();
   }
 
   @override
-  Future<UserApp> signUp(UserApp user, AuthParams authParams) {
-    // TODO: implement signUp
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateUser(UserApp user) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  Future<void> updateUser(UserApp user) async {
+    await dataSource.updateUser(UserAppDto.fromEntity(user));
   }
 }

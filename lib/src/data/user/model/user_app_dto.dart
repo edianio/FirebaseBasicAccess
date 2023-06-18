@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_basic_access/src/domain/user/entities/user_app.dart';
 
 class UserAppDto {
   final String? id;
@@ -33,4 +34,25 @@ class UserAppDto {
         'email': email,
         'token': token,
       };
+
+  /// This method is used to convert the data from the database to the firebase
+  Map<String, dynamic> toMap() => {
+        'name': name,
+        'email': email,
+        'token': token,
+      };
+
+  UserApp toEntity() => UserApp(
+        id: id,
+        name: name,
+        email: email,
+        token: token,
+      );
+
+  factory UserAppDto.fromEntity(UserApp user) => UserAppDto(
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        token: user.token,
+      );
 }
